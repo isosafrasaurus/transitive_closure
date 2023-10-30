@@ -56,7 +56,8 @@ Proof.
   unfold adj_matrix_to_adj, adj_to_adj_matrix.
   rewrite <- map_nth_error with (f0 := build_row v1 vs f).
   destruct (nth_error (map (build_row v1 vs f) vs) (find_index v2 vs 0)) as [row |] eqn:H_row.
-
+  - simpl. rewrite nth_error_map. rewrite H_row. simpl. reflexivity.
+  - simpl. rewrite nth_error_map. rewrite H_row. simpl. reflexivity.
 Qed.
 
 
