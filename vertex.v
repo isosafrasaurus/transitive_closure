@@ -80,3 +80,27 @@ Proof.
   - simpl. rewrite nth_error_map. rewrite H_row. simpl. reflexivity.
   - simpl. rewrite nth_error_map. rewrite H_row. simpl. reflexivity.
 Qed.
+
+Fixpoint reachable (g : Graph) (v1 v2 : V) : bool :=
+  match adjacency g v1 v2 with
+  | true => true (* Directly connected *)
+  | false => orb_list (map (fun v => adjacency g v1 v && reachable g v v2) (list_of_all_vertices_in_g))
+  end.
+
+(* Get the i-th row of a boolean matrix *)
+Fixpoint get_row (m : list (list bool)) (i : nat) : list bool :=
+  match m with
+  | [] => []
+  | row :: rest => if Nat.eqb i 0 then row else get_row rest (i - 1)
+  end.
+
+(* Get the i-th column of a boolean matrix *)
+Fixpoint get_column (m : list (list bool)) (i : nat) : list bool :=
+  match m with
+  | [] => []
+  | row :: rest =>
+      match row with
+      | [] => []
+      | b :: bs => if Nat.eqb i 0 then b :: get_column rest i else get_column rest (i - 1)
+      end
+  end.
