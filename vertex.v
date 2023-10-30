@@ -130,6 +130,14 @@ Fixpoint bool_matrix_mult (m1 m2 : list (list bool)) : list (list bool) :=
 (* Matrix power *)
 Fixpoint bool_matrix_power (m : list (list bool)) (n : nat) : list (list bool) :=
   match n with
-  | 0 => identity_matrix (* Fill in the definition of identity_matrix *)
+  | 0 => identity_matrix
   | S n' => bool_matrix_mult m (bool_matrix_power m n')
   end.
+
+(* Identity matrix with dimension n *)
+Fixpoint identity_matrix (n : nat) : list (list bool) :=
+  match n with
+  | 0 => []
+  | S n' => (map (fun _ : nat => false) (seq 0 n)) :: identity_matrix n'
+  end.
+
