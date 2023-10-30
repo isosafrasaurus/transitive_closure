@@ -28,4 +28,13 @@ Record dfs_state := {
   sccs : list (list vertex) 
 }.
 
+(* Tarjan's Algorithm *)
+Fixpoint find_sccs (g : graph) : list (list vertex) :=
+  let init_state := { index := 0; 
+                      stack := []; 
+                      visited := map (fun _ => false) (vertices g); 
+                      dfn := map (fun _ => 0) (vertices g); 
+                      low := map (fun _ => 0) (vertices g); 
+                      sccs := [] } in
+
 End tarjan.
