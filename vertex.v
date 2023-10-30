@@ -112,3 +112,24 @@ Fixpoint dot_product (l1 l2 : list bool) : bool :=
   | b1 :: bs1, b2 :: bs2 => b1 && b2 && dot_product bs1 bs2
   | _, _ => false
   end.
+
+(* Matrix multiplication *)
+Fixpoint bool_matrix_mult (m1 m2 : list (list bool)) : list (list bool) :=
+  match m1 with
+  | [] => []
+  | row1 :: rest1 =>
+      let rec_mult := bool_matrix_mult rest1 m2 in
+      match m2 with
+      | [] => []
+      | row2 :: rest2 =>
+          let elem := dot_product row1 row2 in
+          elem :: rec_mult
+      end
+  end.
+
+(* Matrix power *)
+Fixpoint bool_matrix_power (m : list (list bool)) (n : nat) : list (list bool) :=
+  match n with
+  | 0 => identity_matrix (* Fill in the definition of identity_matrix *)
+  | S n' => bool_matrix_mult m (bool_matrix_power m n')
+  end.
