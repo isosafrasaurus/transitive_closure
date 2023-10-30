@@ -69,3 +69,11 @@ Definition check_relation_matrix (R : A -> A -> bool) (n : nat) (a : A) : list b
 
 Definition create_adjacency_matrix (R : A -> A -> bool) (n : nat) : list (list bool) :=
   map (check_relation_matrix R n) (map nat_to_A (rev (seq 0 n))).
+
+Definition index (a : A) : nat :=
+  match a with
+  | wrap n => n
+  end.
+
+Definition index_inv (n : nat) : A :=
+  wrap n.
