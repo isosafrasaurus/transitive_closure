@@ -168,4 +168,10 @@ Proof.
     unfold M''. simpl.
     (* Compute the (u, v) element of bool_matrix_mult explicitly *)
     assert (H_elem : nth_bool (nth u M'' v) = dot_product (get_row m u) (get_column M' v)).
+    { (* Prove the assertion about the (u, v) element *)
+      unfold bool_matrix_mult. rewrite <- HeqM'. simpl.
+      destruct (nth_error M' v) as [col_v |] eqn:Hcol_v.
+      - rewrite Hcol_v. apply dot_product_comm.
+      - apply nth_error_None in Hcol_v. rewrite Hcol_v. simpl. reflexivity.
+    }
 Qed.
