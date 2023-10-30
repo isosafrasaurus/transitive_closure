@@ -1,0 +1,57 @@
+Require Import Coq.Arith.Arith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Lists.List.
+Import ListNotations.
+
+Require Import graph.
+Require Import vertex.
+
+Module tarjan.
+
+Fixpoint find_neighbors (g : graph) (v : vertex) : list vertex :=
+  let idx := find_index v (vertices g) 0 in (* Get vertex's index in the adjacency matrix *)
+  match nth_error (adj_matrix g) idx with
+  | Some row => 
+      map (fun (w, connected) => if connected then mkVertex w else v) 
+          (enumerate_with_index row) (* Enumerate elements along with indices *)
+  | None => [] 
+  end. 
+
+
+(* State for the DFS process *)
+Record dfs_state := { 
+  index : nat; (* Unique index for each vertex *)
+  stack : list vertex;
+  visited : list bool; (* Marks if a vertex has been visited *)
+  dfn : list nat;  (* Depth-first search index  *)
+  low : list nat;   (* Low-link value *)
+  sccs : list (list vertex) 
+}.
+
+(* Tarjan's Algorithm *)
+Fixpoint find_sccs (g : graph) : list (list vertex) :=
+  let init_state := { index := 0; 
+                      stack := []; 
+                      visited := map (fun _ => false) (vertices g); 
+                      dfn := map (fun _ => 0) (vertices g); 
+                      low := map (fun _ => 0) (vertices g); 
+                      sccs := [] } in
+
+  let rec tarjan_inner (st : dfs_state) (v : vertex) : dfs_state :=
+    let idx_v := find_index v (vertices g) 0 in
+    let new_visited := update_list (st.visited) idx_v true in  (* Mark visited *)
+    let new_index := st.index + 1 in
+    let new_dfn := update_list st.dfn idx_v new_index in    (* Assign index = dfn *)
+    let new_low := update_list st.low idx_v new_index in    (* low = dfn initially *)
+    let new_stack := v :: st.stack in                        (* Push onto stack *)
+
+    (* Explore neighbors *)
+    let st' := fold_left (fun st' w => 
+                    let idx_w := find_index w (vertices g) 0 in
+                    if not (nth_bool new_visited idx_w) then (* If neighbor not visited *) 
+                      tarjan_inner st' w 
+                    else if find w st.stack true then (* Back-edge to SCC member *)
+                      { st' with low := update_list (st'.low) idx_v (min (nth_bool (st'.low) idx_v) (nth_bool (st'.dfn) idx_w)) 
+                      } 
+                    else st') (find_neighbors g v) st in
+End tarjan.
