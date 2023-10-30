@@ -48,8 +48,23 @@ Fixpoint find_sccs (g : graph) : list (list vertex) :=
     (* Explore neighbors *)
     let st' := fold_left (fun st' w => 
                     let idx_w := find_index w (vertices g) 0 in
-  if find w st.stack true then (* Back-edge to SCC member *)
+                    if not (nth_bool new_visited idx_w) then (* If neighbor not visited *) 
+                      tarjan_inner st' w 
+                    else if find w st.stack true then (* Back-edge to SCC member *)
                       { st' with low := update_list (st'.low) idx_v (min (nth_bool (st'.low) idx_v) (nth_bool (st'.dfn) idx_w)) 
                       } 
                     else st') (find_neighbors g v) st in
+
+    (* Check if v is the root of an SCC *)
+    if (nth_bool new_dfn idx_v) = (nth_bool new_low idx_v) then 
+      let (scc, new_stack') := 
+        match new_stack with
+        | h :: t => if h = v then ([], t) else let (scc', t') := (scc, t) in (h :: scc', t') 
+        | _ => ([], [])
+        end in
+      { st' with low := update_list (st'.low) idx_v 0;  (* Reset low for other SCCs *)
+                stack := new_stack'; 
+                sccs := scc :: st'.sccs }
+    else st'
+
 End tarjan.
