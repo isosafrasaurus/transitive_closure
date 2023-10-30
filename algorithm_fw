@@ -43,4 +43,15 @@ Fixpoint floyd_warshall (g : graph) : list (list bool) :=
          fw_inner init_matrix (n - 1)
   end.
 
+Theorem floyd_warshall_correct :
+  forall (g : graph),
+    let n := length (vertices g) in
+    let result := floyd_warshall g in
+    forall i j : nat,
+      i < n -> j < n ->
+      nth_error result i = Some row ->
+      nth_error row j = Some true ->
+      exists p : path, shortest_path g i j p.
+
+
 End algorithm_fw.
