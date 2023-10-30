@@ -41,3 +41,11 @@ Inductive transitive_closure (R: relation) : relation :=
       R x y -> transitive_closure R y z -> transitive_closure R x z.
 
 End Relations.
+
+Section AdjacencyMatrix.
+
+Definition decidable_relation (x y : A) : bool :=
+  match decidable_eq_A x y with
+  | left _ => true
+  | right _ => false
+  end.
