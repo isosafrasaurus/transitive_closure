@@ -133,7 +133,10 @@ Fixpoint update_tc (tc : list (list bool)) (v : vertex) (visited : list vertex) 
   | row :: rest =>
     match visited with
     | [] => row :: rest (* No more vertices to update, return the remaining rows *)
-
+    | u :: visited' =>
+      let updated_row := update_row row u in
+      update_tc (updated_row :: rest) v visited'
+    end
   end.
 
 (* Helper function: Update a row in the matrix based on visited vertices *)
