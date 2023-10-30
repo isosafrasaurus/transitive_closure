@@ -44,6 +44,20 @@ End Relations.
 
 Section AdjacencyMatrix.
 
+Fixpoint range (n: nat) : list nat :=
+  match n with
+  | 0 => nil
+  | S n' => n' :: (range n')
+  end.
+
+Definition decidable_eq_A (x y : A) : {x = y} + {x <> y}.
+Proof.
+  destruct x, y.
+  destruct (Nat.eq_dec n n0).
+  - left. f_equal. assumption.
+  - right. intros H. inversion H. contradiction.
+Defined.
+
 Definition decidable_relation (x y : A) : bool :=
   match decidable_eq_A x y with
   | left _ => true
