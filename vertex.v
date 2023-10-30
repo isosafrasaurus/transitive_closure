@@ -86,3 +86,11 @@ Definition orb_list (l : list bool) : bool :=
 
 Definition dot_product (a b : list bool) : bool :=
   orb_list (map (fun ab => andb (fst ab) (snd ab)) (combine a b)).
+
+Definition get_column (m : list (list bool)) (i : nat) : list bool :=
+  map (fun row => nth i row false) m.
+
+Definition bool_matrix_mult (m1 m2 : list (list bool)) : list (list bool) :=
+  map (fun row =>
+         map (fun i => dot_product row (get_column m2 i))
+             (seq 0 (length (hd [] m2)))) m1.
