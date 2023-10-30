@@ -95,4 +95,8 @@ Fixpoint transitive_closure_adapter (g: graph) : list (list bool) :=
     aux (hd (vertices g)) (vertices g) []
 end.
 
+Fixpoint transitive_closure (g : graph) : list (list bool) :=
+    transitive_closure_general (g) (transitive_closure_adapter g)
+end.
+
 End tarjan.
