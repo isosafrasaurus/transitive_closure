@@ -159,5 +159,10 @@ Proof.
     (* Assumptions *)
     assert (H1 : nth_bool (nth u m v) = true). { assumption. }
     assert (Hw : exists w : nat, nth_bool (nth v M' w) = true).
+    { (* Prove the existence of w satisfying the condition *)
+      destruct (nth_error M' v) as [col_v |] eqn:Hcol_v.
+      - exists w. apply nth_error_Some. intro Hn. rewrite Hn in Hcol_v. discriminate.
+      - exists 0. simpl. reflexivity.
+    }
 
 Qed.
