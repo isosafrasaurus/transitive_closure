@@ -37,4 +37,8 @@ Fixpoint find_sccs (g : graph) : list (list vertex) :=
                       low := map (fun _ => 0) (vertices g); 
                       sccs := [] } in
 
+  let rec tarjan_inner (st : dfs_state) (v : vertex) : dfs_state :=
+    let idx_v := find_index v (vertices g) 0 in
+    let new_visited := update_list (st.visited) idx_v true in  (* Mark visited *)
+
 End tarjan.
