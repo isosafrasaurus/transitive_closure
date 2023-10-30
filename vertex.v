@@ -70,7 +70,12 @@ Proof.
   apply map_ext_in.
   intros v H_in_vs.
   unfold adj_to_adj_matrix, build_row.
-
+  apply map_ext_in.
+  intros u H_in_vs.
+  rewrite <- map_nth_error with (f := fun v' => adjacency (mkGraph m') v' u).
+  destruct (nth_error (map (fun v' => adjacency (mkGraph m') v' u) vs) (find_index v vs 0)) as [row |] eqn:H_row.
+  - simpl. rewrite nth_error_map. rewrite H_row. simpl. reflexivity.
+  - simpl. rewrite nth_error_map. rewrite H_row. simpl. reflexivity.
 Qed.
 
 
