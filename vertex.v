@@ -44,3 +44,17 @@ Definition adj_matrix_to_adj (m : list (list bool)) (vs : list V) : V -> V -> bo
     | None => false
     end.
 
+Theorem adj_to_matrix_to_adj_isomorphic :
+  forall (f : V -> V -> bool) (vs : list V),
+    forall v1 v2 : V,
+      let m := adj_to_adj_matrix vs f in
+      let g := adj_matrix_to_adj m vs in
+      f v1 v2 = g v1 v2.
+Proof. Admitted.
+
+Theorem adj_matrix_to_adj_isomorphic :
+  forall (m : list (list bool)) (vs : list V),
+    let f := adj_matrix_to_adj m vs in
+    let m' := adj_to_adj_matrix vs f in
+    m = m'.
+Proof. Admitted.
