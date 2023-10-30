@@ -1,0 +1,32 @@
+Require Import Coq.Arith.Arith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Lists.List.
+Import ListNotations.
+
+Require Import graph.
+Require Import vertex.
+
+Module algorithm_fw.
+
+Structure vertex := mkVertex { unV : nat }.
+
+Structure graph := mkGraph {
+  adj_matrix : list (list bool);
+  vertices : list vertex 
+}.
+
+Definition get_elem (m : list (list bool)) (i j : nat) : option bool :=
+  match nth_error m i with
+  | Some row => nth_error row j
+  | None => None
+  end.
+
+(* Matrix addition for representing shorter path updates *)
+Fixpoint matrix_add (m1 m2 : list (list bool)) : list (list bool) :=
+  match m1 with
+  | [] => []
+  | row1 :: rest1 =>
+    (map2 (fun b1 b2 => if (orb b1 b2) then infinity else b1) row1 (head [] m2)) :: matrix_add rest1 (tl m2)
+  end.
+
+End algorithm_fw.
