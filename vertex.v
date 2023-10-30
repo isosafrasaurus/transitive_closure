@@ -104,3 +104,11 @@ Fixpoint get_column (m : list (list bool)) (i : nat) : list bool :=
       | b :: bs => if Nat.eqb i 0 then b :: get_column rest i else get_column rest (i - 1)
       end
   end.
+
+(* Boolean dot product of two lists *)
+Fixpoint dot_product (l1 l2 : list bool) : bool :=
+  match l1, l2 with
+  | [], [] => true
+  | b1 :: bs1, b2 :: bs2 => b1 && b2 && dot_product bs1 bs2
+  | _, _ => false
+  end.
