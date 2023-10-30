@@ -181,3 +181,6 @@ Proof.
       * reflexivity.
       * exfalso. apply Hw. exists w. assumption.
 Qed.
+
+(* A very large number to represent infinity *)
+Definition infinity := 1000000. 
