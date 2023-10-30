@@ -1,0 +1,30 @@
+Require Import Coq.Bool.Bool.
+Require Import Coq.Arith.Arith.
+Require Import Coq.Lists.List.
+Import ListNotations.
+
+Section Types.
+
+Inductive A : Type :=
+  | wrap : nat -> A.
+
+Definition nat_to_A (n : nat) : A :=
+  wrap n.
+
+Definition A_to_nat (a : A) : nat :=
+  match a with
+  | wrap n => n
+  end.
+
+Lemma nat_to_A_to_nat : forall n : nat, A_to_nat (nat_to_A n) = n.
+Proof.
+  intros n. simpl. reflexivity.
+Qed.
+
+Lemma A_to_nat_to_A : forall a : A, nat_to_A (A_to_nat a) = a.
+Proof.
+  intros a. destruct a. simpl. reflexivity.
+Qed.
+
+End Types.
+
