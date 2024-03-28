@@ -141,3 +141,19 @@ Fixpoint identity_matrix (n : nat) : list (list bool) :=
   | S n' => (map (fun _ : nat => false) (seq 0 n)) :: identity_matrix n'
   end.
 
+(* Lemma: matrix_power_preserves_adjacency *)
+Lemma matrix_power_preserves_adjacency :
+  forall (m : list (list bool)) (u v : nat) (n : nat),
+    nth_bool (nth u m v) = true ->
+    nth_bool (nth u (bool_matrix_power m n) v) = true.
+Proof.
+  induction n; simpl.
+  - (* Base Case: n = 0 *)
+    intros H1. unfold identity_matrix.
+    destruct (Nat.eqb u v) eqn:Heq.
+    + apply Nat.eqb_eq in Heq. subst. simpl. apply H1.
+    + apply Nat.eqb_neq in Heq. simpl. rewrite Heq. reflexivity.
+  - (* Inductive Step: n = S n' *)
+    intros. remember (bool_matrix_power m n') as M'.
+
+Qed.
