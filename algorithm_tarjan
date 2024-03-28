@@ -36,7 +36,6 @@ Fixpoint find_sccs (g : graph) : list (list vertex) :=
                       dfn := map (fun _ => 0) (vertices g); 
                       low := map (fun _ => 0) (vertices g); 
                       sccs := [] } in
-
   let rec tarjan_inner (st : dfs_state) (v : vertex) : dfs_state :=
     let idx_v := find_index v (vertices g) 0 in
     let new_visited := update_list (st.visited) idx_v true in  (* Mark visited *)
@@ -66,5 +65,9 @@ Fixpoint find_sccs (g : graph) : list (list vertex) :=
                 stack := new_stack'; 
                 sccs := scc :: st'.sccs }
     else st'
+
+  in
+  fold_left (fun st v => tarjan_inner st v) init_state (vertices g)).sccs
+end.
 
 End tarjan.
