@@ -157,7 +157,7 @@ Proof.
     intros. remember (bool_matrix_power m n') as M'.
     simpl. remember (bool_matrix_mult m M') as M''.
     (* Assumptions *)
-    assert (H1 : nth_bool (nth v m u) = false). { assumption. }
+    assert (H1 : nth_bool (nth u m v) = true). { assumption. }
     assert (Hw : exists w : nat, nth_bool (nth v M' w) = true).
 
 Qed.
