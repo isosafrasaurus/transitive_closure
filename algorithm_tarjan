@@ -128,5 +128,15 @@ Fixpoint dfs_within_scc (g : graph) (v : vertex) (scc : list vertex) (visited : 
 
 (* Helper function: Update the transitive closure matrix *)
 Fixpoint update_tc (tc : list (list bool)) (v : vertex) (visited : list vertex) : list (list bool) :=
+  match tc with
+  | [] => [] (* Base case: Empty matrix, return an empty matrix *)
+  | row :: rest =>
+    match visited with
+    | [] => row :: rest (* No more vertices to update, return the remaining rows *)
+
+  end.
+
+
+
 
 End tarjan.
