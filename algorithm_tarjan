@@ -136,7 +136,14 @@ Fixpoint update_tc (tc : list (list bool)) (v : vertex) (visited : list vertex) 
 
   end.
 
-
+(* Helper function: Update a row in the matrix based on visited vertices *)
+Fixpoint update_row (row : list bool) (u : vertex) : list bool :=
+  match row with
+  | [] => [] (* Base case: Empty row, return an empty row *)
+  | b :: rest =>
+    let updated_b := b || (tc_value u rest) in
+    updated_b :: update_row rest u
+  end.
 
 
 End tarjan.
