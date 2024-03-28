@@ -99,4 +99,22 @@ Fixpoint transitive_closure (g : graph) : list (list bool) :=
     transitive_closure_general (g) (transitive_closure_adapter g)
 end.
 
+(* DFS Expansion - Simplified *)
+Fixpoint dfs_expand (g : graph) (tc : list (list bool)) (scc : list vertex) : list (list bool) :=
+  match scc with
+  | [] => tc (* Base case: SCC is empty, return the updated transitive closure matrix *)
+  | v :: rest =>
+    (* Perform DFS from vertex 'v' within the SCC *)
+    let visited := dfs_within_scc g v scc [] in
+    (* Update the transitive closure matrix based on visited vertices *)
+    let tc' := update_tc tc v visited in
+    dfs_expand g tc' rest
+  end.
+
+(* Helper function: Perform DFS within the SCC *)
+Fixpoint dfs_within_scc (g : graph) (v : vertex) (scc : list vertex) (visited : list vertex) : list vertex :=
+
+(* Helper function: Update the transitive closure matrix *)
+Fixpoint update_tc (tc : list (list bool)) (v : vertex) (visited : list vertex) : list (list bool) :=
+
 End tarjan.
