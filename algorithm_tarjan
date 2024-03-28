@@ -70,4 +70,14 @@ Fixpoint find_sccs (g : graph) : list (list vertex) :=
   fold_left (fun st v => tarjan_inner st v) init_state (vertices g)).sccs
 end.
 
+(* Condensed graph construction *)
+Fixpoint condense_graph (g : graph) (sccs : list (list vertex)) : graph :=
+  let new_vertices := map (fun scc => mkVertex (0)) sccs in (* Create a single vertex per SCC *)
+  let new_matrix := map (fun sccs1 => map (fun scc2 => 
+                                    (* Check if there's an edge between any vertex in scc1 and any in scc2 *)
+                                    exists u v, In u scc1 /\ In v scc2 /\ (get_elem (adj_matrix g) u v) = Some true)
+                                  sccs) sccs in
+  mkGraph { adj_matrix := new_matrix; vertices := new_vertices }
+end.
+
 End tarjan.
