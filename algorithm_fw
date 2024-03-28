@@ -52,6 +52,6 @@ Theorem floyd_warshall_correct :
       nth_error result i = Some row ->
       nth_error row j = Some true ->
       exists p : path, shortest_path g i j p.
-
+Proof. Admitted.
 
 End algorithm_fw.
