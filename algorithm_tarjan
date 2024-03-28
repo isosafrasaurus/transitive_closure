@@ -1,0 +1,31 @@
+Require Import Coq.Arith.Arith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Lists.List.
+Import ListNotations.
+
+Require Import graph.
+Require Import vertex.
+
+Module tarjan.
+
+Fixpoint find_neighbors (g : graph) (v : vertex) : list vertex :=
+  let idx := find_index v (vertices g) 0 in (* Get vertex's index in the adjacency matrix *)
+  match nth_error (adj_matrix g) idx with
+  | Some row => 
+      map (fun (w, connected) => if connected then mkVertex w else v) 
+          (enumerate_with_index row) (* Enumerate elements along with indices *)
+  | None => [] 
+  end. 
+
+
+(* State for the DFS process *)
+Record dfs_state := { 
+  index : nat; (* Unique index for each vertex *)
+  stack : list vertex;
+  visited : list bool; (* Marks if a vertex has been visited *)
+  dfn : list nat;  (* Depth-first search index  *)
+  low : list nat;   (* Low-link value *)
+  sccs : list (list vertex) 
+}.
+
+End tarjan.
