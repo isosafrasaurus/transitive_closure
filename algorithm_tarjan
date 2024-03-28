@@ -145,5 +145,12 @@ Fixpoint update_row (row : list bool) (u : vertex) : list bool :=
     updated_b :: update_row rest u
   end.
 
+(* Helper function: Get the transitive closure value for a vertex *)
+Definition tc_value (u : vertex) (row : list bool) : bool :=
+  match nth_error row u with
+  | Some b => b
+  | None => false (* Vertex 'u' is out of bounds, default to false *)
+  end.
+
 
 End tarjan.
