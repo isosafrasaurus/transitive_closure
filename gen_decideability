@@ -28,3 +28,16 @@ Qed.
 
 End Types.
 
+Section Relations.
+
+Definition relation := A -> A -> Prop.
+
+Definition transitive (R: relation) :=
+  forall x y z, R x y -> R y z -> R x z.
+
+Inductive transitive_closure (R: relation) : relation :=
+  | tc_base : forall x y, R x y -> transitive_closure R x y
+  | tc_step : forall x y z,
+      R x y -> transitive_closure R y z -> transitive_closure R x z.
+
+End Relations.
