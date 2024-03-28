@@ -174,4 +174,10 @@ Proof.
       - rewrite Hcol_v. apply dot_product_comm.
       - apply nth_error_None in Hcol_v. rewrite Hcol_v. simpl. reflexivity.
     }
+    destruct (Nat.eqb u v) eqn:Heq_uv.
+    + apply Nat.eqb_eq in Heq_uv. subst. apply H_elem.
+    + apply Nat.eqb_neq in Heq_uv. rewrite H_elem.
+      destruct (dot_product (get_row m u) (get_column M' v)) eqn:Hdot.
+      * reflexivity.
+      * exfalso. apply Hw. exists w. assumption.
 Qed.
