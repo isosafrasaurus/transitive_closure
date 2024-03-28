@@ -63,3 +63,36 @@ Definition decidable_relation (x y : A) : bool :=
   | left _ => true
   | right _ => false
   end.
+
+Definition check_relation_matrix (R : A -> A -> bool) (n : nat) (a : A) : list bool :=
+  map (fun i => R a (nat_to_A i)) (rev (seq 0 n)).
+
+Definition create_adjacency_matrix (R : A -> A -> bool) (n : nat) : list (list bool) :=
+  map (check_relation_matrix R n) (map nat_to_A (rev (seq 0 n))).
+
+Definition index (a : A) : nat :=
+  match a with
+  | wrap n => n
+  end.
+
+Definition index_inv (n : nat) : A :=
+  wrap n.
+
+Lemma index_inv_index : forall a : A, index_inv (index a) = a.
+Proof.
+  intros a. destruct a. simpl. reflexivity.
+Qed.
+
+Lemma index_index_inv : forall n : nat, index (index_inv n) = n.
+Proof.
+  intros n. simpl. reflexivity.
+Qed.
+
+(* Example relation as an adjacency matrix *)
+Definition example_relation (i j : nat) : bool :=
+  match (i, j) with
+  | (0, 1) => true
+  | (1, 2) => true
+  | _ => false
+  end.
+
