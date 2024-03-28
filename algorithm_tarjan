@@ -113,6 +113,18 @@ Fixpoint dfs_expand (g : graph) (tc : list (list bool)) (scc : list vertex) : li
 
 (* Helper function: Perform DFS within the SCC *)
 Fixpoint dfs_within_scc (g : graph) (v : vertex) (scc : list vertex) (visited : list vertex) : list vertex :=
+  match visited with
+  | [] => (* Base case: Vertex 'v' has not been visited *)
+           if in_dec vertex_eq_dec v scc then
+             (* Vertex 'v' is part of the SCC *)
+             let neighbors := adjacent_vertices g v in
+             let visited' := v :: visited in
+             fold_left (dfs_within_scc g) neighbors visited'
+           else
+             visited (* Vertex 'v' is not part of the SCC, skip it *)
+  | _ => visited (* Vertex 'v' has already been visited, skip it *)
+  end.
+
 
 (* Helper function: Update the transitive closure matrix *)
 Fixpoint update_tc (tc : list (list bool)) (v : vertex) (visited : list vertex) : list (list bool) :=
