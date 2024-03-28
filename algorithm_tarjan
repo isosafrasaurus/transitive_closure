@@ -40,5 +40,8 @@ Fixpoint find_sccs (g : graph) : list (list vertex) :=
   let rec tarjan_inner (st : dfs_state) (v : vertex) : dfs_state :=
     let idx_v := find_index v (vertices g) 0 in
     let new_visited := update_list (st.visited) idx_v true in  (* Mark visited *)
-
+    let new_index := st.index + 1 in
+    let new_dfn := update_list st.dfn idx_v new_index in    (* Assign index = dfn *)
+    let new_low := update_list st.low idx_v new_index in    (* low = dfn initially *)
+    let new_stack := v :: st.stack in                        (* Push onto stack *)
 End tarjan.
