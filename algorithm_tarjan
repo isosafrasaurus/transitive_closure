@@ -5,6 +5,7 @@ Import ListNotations.
 
 Require Import graph.
 Require Import vertex.
+Require Import algorithm_fw.
 
 Module tarjan.
 
@@ -78,6 +79,20 @@ Fixpoint condense_graph (g : graph) (sccs : list (list vertex)) : graph :=
                                     exists u v, In u scc1 /\ In v scc2 /\ (get_elem (adj_matrix g) u v) = Some true)
                                   sccs) sccs in
   mkGraph { adj_matrix := new_matrix; vertices := new_vertices }
+end.
+
+(* Adapter to use a more general transitive closure implementation *)
+Fixpoint transitive_closure_adapter (g: graph) : list (list bool) :=
+    let rec aux (v : vertex) (visited : list vertex) (acc : list (list bool)) : list (list bool) :=
+      match visited with
+      | [] => acc
+      | h::t => if In v (vertices g) then 
+                    let new_acc := add_row acc ((map (fun w => (* Check reachability from v to w *)) (vertices g))) in
+                    aux h t new_acc
+                  else 
+                    aux h t acc
+      end in
+    aux (hd (vertices g)) (vertices g) []
 end.
 
 End tarjan.
