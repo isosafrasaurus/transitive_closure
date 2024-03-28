@@ -1,0 +1,127 @@
+DIGEST 074b06fe61789da0e9392ab85f6e1c98
+Fgraph
+R15:29 Coq.Arith.Arith <> <> lib
+R47:59 Coq.Bool.Bool <> <> lib
+R77:90 Coq.Lists.List <> <> lib
+R100:112 Coq.Lists.List ListNotations <> mod
+mod 123:127 <> graph
+def 142:150 graph andb_list
+R157:160 Coq.Init.Datatypes <> list ind
+R162:165 Coq.Init.Datatypes <> bool ind
+binder 153:153 <> l:1
+R170:173 Coq.Init.Datatypes <> bool ind
+R180:189 Coq.Lists.List <> fold_right def
+R201:201 graph <> l:1 var
+R196:199 Coq.Init.Datatypes <> true constr
+R191:194 Coq.Init.Datatypes <> andb def
+def 216:223 graph orb_list
+R230:233 Coq.Init.Datatypes <> list ind
+R235:238 Coq.Init.Datatypes <> bool ind
+binder 226:226 <> l:2
+R243:246 Coq.Init.Datatypes <> bool ind
+R253:262 Coq.Lists.List <> fold_right def
+R274:274 graph <> l:2 var
+R268:272 Coq.Init.Datatypes <> false constr
+R264:266 Coq.Init.Datatypes <> orb def
+def 289:299 graph dot_product
+R308:311 Coq.Init.Datatypes <> list ind
+R313:316 Coq.Init.Datatypes <> bool ind
+binder 302:302 <> a:3
+binder 304:304 <> b:4
+R321:324 Coq.Init.Datatypes <> bool ind
+R331:338 graph graph orb_list def
+R341:343 Coq.Lists.List <> map def
+R381:387 Coq.Lists.List <> combine def
+R391:391 graph <> b:4 var
+R389:389 graph <> a:3 var
+binder 350:351 <> ab:5
+R356:359 Coq.Init.Datatypes <> andb def
+R371:373 Coq.Init.Datatypes <> snd def
+R375:376 graph <> ab:5 var
+R362:364 Coq.Init.Datatypes <> fst def
+R366:367 graph <> ab:5 var
+def 408:417 graph get_column
+R424:427 Coq.Init.Datatypes <> list ind
+R430:433 Coq.Init.Datatypes <> list ind
+R435:438 Coq.Init.Datatypes <> bool ind
+binder 420:420 <> m:6
+R447:449 Coq.Init.Datatypes <> nat ind
+binder 443:443 <> i:7
+R454:457 Coq.Init.Datatypes <> list ind
+R459:462 Coq.Init.Datatypes <> bool ind
+R469:471 Coq.Lists.List <> map def
+R502:502 graph <> m:6 var
+binder 478:480 <> row:8
+R485:487 Coq.Lists.List <> nth def
+R495:499 Coq.Init.Datatypes <> false constr
+R491:493 graph <> row:8 var
+R489:489 graph <> i:7 var
+def 517:532 graph bool_matrix_mult
+R543:546 Coq.Init.Datatypes <> list ind
+R549:552 Coq.Init.Datatypes <> list ind
+R554:557 Coq.Init.Datatypes <> bool ind
+binder 535:536 <> m1:9
+binder 538:539 <> m2:10
+R563:566 Coq.Init.Datatypes <> list ind
+R569:572 Coq.Init.Datatypes <> list ind
+R574:577 Coq.Init.Datatypes <> bool ind
+R585:587 Coq.Lists.List <> map def
+R701:702 graph <> m1:9 var
+binder 594:596 <> row:11
+R610:612 Coq.Lists.List <> map def
+R673:675 Coq.Lists.List <> seq def
+R680:685 Coq.Init.Datatypes <> length def
+R688:689 Coq.Lists.List <> hd def
+R694:695 graph <> m2:10 var
+R691:692 Coq.Lists.List ListNotations ::list_scope:'['_']' not
+binder 619:619 <> i:12
+R624:634 graph graph dot_product def
+R636:638 graph <> row:11 var
+R641:650 graph graph get_column def
+R652:653 graph <> m2:10 var
+R655:655 graph <> i:12 var
+def 717:734 graph bool_matrix_square
+R741:744 Coq.Init.Datatypes <> list ind
+R747:750 Coq.Init.Datatypes <> list ind
+R752:755 Coq.Init.Datatypes <> bool ind
+binder 737:737 <> m:13
+R761:764 Coq.Init.Datatypes <> list ind
+R767:770 Coq.Init.Datatypes <> list ind
+R772:775 Coq.Init.Datatypes <> bool ind
+R783:798 graph graph bool_matrix_mult def
+R800:800 graph <> m:13 var
+R802:802 graph <> m:13 var
+def 817:830 graph example_matrix
+R834:837 Coq.Init.Datatypes <> list ind
+R840:843 Coq.Init.Datatypes <> list ind
+R845:848 Coq.Init.Datatypes <> bool ind
+R857:857 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R878:882 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R903:907 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R928:928 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R858:858 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R863:864 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R870:871 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R877:877 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R859:862 Coq.Init.Datatypes <> true constr
+R865:869 Coq.Init.Datatypes <> false constr
+R872:876 Coq.Init.Datatypes <> false constr
+R883:883 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R889:890 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R895:896 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R902:902 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R884:888 Coq.Init.Datatypes <> false constr
+R891:894 Coq.Init.Datatypes <> true constr
+R897:901 Coq.Init.Datatypes <> false constr
+R908:908 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R914:915 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R921:922 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R927:927 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R909:913 Coq.Init.Datatypes <> false constr
+R916:920 Coq.Init.Datatypes <> false constr
+R923:926 Coq.Init.Datatypes <> true constr
+def 943:964 graph example_matrix_squared
+R969:986 graph graph bool_matrix_square def
+R988:1001 graph graph example_matrix def
+R1021:1042 graph graph example_matrix_squared def
+R1050:1054 graph graph <> mod
