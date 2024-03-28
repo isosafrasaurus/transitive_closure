@@ -78,4 +78,11 @@ Proof.
   - simpl. rewrite nth_error_map. rewrite H_row. simpl. reflexivity.
 Qed.
 
+Definition andb_list (l : list bool) : bool :=
+  fold_right andb true l.
 
+Definition orb_list (l : list bool) : bool :=
+  fold_right orb false l.
+
+Definition dot_product (a b : list bool) : bool :=
+  orb_list (map (fun ab => andb (fst ab) (snd ab)) (combine a b)).
