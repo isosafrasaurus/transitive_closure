@@ -31,3 +31,16 @@ Definition nth_bool (l : list bool) (n : nat) : bool :=
 
 Definition build_row (v : V) (vs : list V) (adj : V -> V -> bool) : list bool :=
   map (adj v) vs.
+
+Definition adj_to_adj_matrix (vs : list V) (adj : V -> V -> bool) : list (list bool) :=
+  map (fun v => build_row v vs adj) vs.
+
+Definition adj_matrix_to_adj (m : list (list bool)) (vs : list V) : V -> V -> bool :=
+  fun v1 v2 =>
+    let idx1 := find_index v1 vs 0 in
+    let idx2 := find_index v2 vs 0 in
+    match nth_error m idx1 with
+    | Some row => nth_bool row idx2
+    | None => false
+    end.
+
