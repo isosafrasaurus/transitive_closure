@@ -6,6 +6,8 @@ Require Import graph.
 
 Import ListNotations.
 
+Module vertex.
+
 (* Define a vertex wrapper around nat. *)
 Structure V := mkV { unV : nat }.
 
@@ -184,3 +186,5 @@ Qed.
 
 (* A very large number to represent infinity *)
 Definition infinity := 1000000. 
+
+End vertex.
