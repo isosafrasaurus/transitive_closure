@@ -44,4 +44,12 @@ Fixpoint find_sccs (g : graph) : list (list vertex) :=
     let new_dfn := update_list st.dfn idx_v new_index in    (* Assign index = dfn *)
     let new_low := update_list st.low idx_v new_index in    (* low = dfn initially *)
     let new_stack := v :: st.stack in                        (* Push onto stack *)
+
+    (* Explore neighbors *)
+    let st' := fold_left (fun st' w => 
+                    let idx_w := find_index w (vertices g) 0 in
+  if find w st.stack true then (* Back-edge to SCC member *)
+                      { st' with low := update_list (st'.low) idx_v (min (nth_bool (st'.low) idx_v) (nth_bool (st'.dfn) idx_w)) 
+                      } 
+                    else st') (find_neighbors g v) st in
 End tarjan.
