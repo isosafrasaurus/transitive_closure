@@ -28,3 +28,6 @@ Fixpoint find_index (v : V) (vs : list V) (current_index : nat) : nat :=
 
 Definition nth_bool (l : list bool) (n : nat) : bool :=
   nth n l false.
+
+Definition build_row (v : V) (vs : list V) (adj : V -> V -> bool) : list bool :=
+  map (adj v) vs.
