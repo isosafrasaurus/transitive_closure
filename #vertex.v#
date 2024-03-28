@@ -112,3 +112,73 @@ Fixpoint dot_product (l1 l2 : list bool) : bool :=
   | b1 :: bs1, b2 :: bs2 => b1 && b2 && dot_product bs1 bs2
   | _, _ => false
   end.
+
+(* Matrix multiplication *)
+Fixpoint bool_matrix_mult (m1 m2 : list (list bool)) : list (list bool) :=
+  match m1 with
+  | [] => []
+  | row1 :: rest1 =>
+      let rec_mult := bool_matrix_mult rest1 m2 in
+      match m2 with
+      | [] => []
+      | row2 :: rest2 =>
+          let elem := dot_product row1 row2 in
+          elem :: rec_mult
+      end
+  end.
+
+(* Matrix power *)
+Fixpoint bool_matrix_power (m : list (list bool)) (n : nat) : list (list bool) :=
+  match n with
+  | 0 => identity_matrix
+  | S n' => bool_matrix_mult m (bool_matrix_power m n')
+  end.
+
+(* Identity matrix with dimension n *)
+Fixpoint identity_matrix (n : nat) : list (list bool) :=
+  match n with
+  | 0 => []
+  | S n' => (map (fun _ : nat => false) (seq 0 n)) :: identity_matrix n'
+  end.
+
+(* Lemma: matrix_power_preserves_adjacency *)
+Lemma matrix_power_preserves_adjacency :
+  forall (m : list (list bool)) (u v : nat) (n : nat),
+    nth_bool (nth u m v) = true ->
+    nth_bool (nth u (bool_matrix_power m n) v) = true.
+Proof.
+  induction n; simpl.
+  - (* Base Case: n = 0 *)
+    intros H1. unfold identity_matrix.
+    destruct (Nat.eqb u v) eqn:Heq.
+    + apply Nat.eqb_eq in Heq. subst. simpl. apply H1.
+    + apply Nat.eqb_neq in Heq. simpl. rewrite Heq. reflexivity.
+  - (* Inductive Step: n = S n' *)
+    intros. remember (bool_matrix_power m n') as M'.
+    simpl. remember (bool_matrix_mult m M') as M''.
+    (* Assumptions *)
+    assert (H1 : nth_bool (nth u m v) = true). { assumption. }
+    assert (Hw : exists w : nat, nth_bool (nth v M' w) = true).
+    { (* Prove the existence of w satisfying the condition *)
+      destruct (nth_error M' v) as [col_v |] eqn:Hcol_v.
+      - exists w. apply nth_error_Some. intro Hn. rewrite Hn in Hcol_v. discriminate.
+      - exists 0. simpl. reflexivity.
+    }
+    (* Goal: nth_bool (nth u M'' v) = true *)
+    unfold M''. simpl.
+    (* Compute the (u, v) element of bool_matrix_mult explicitly *)
+    assert (H_elem : nth_bool (nth u M'' v) = dot_product (get_row m u) (get_column M' v)).
+    { (* Prove the assertion about the (u, v) element *)
+      unfold bool_matrix_mult. rewrite <- HeqM'. simpl.
+      destruct (nth_error M' v) as [col_v |] eqn:Hcol_v.
+      - rewrite Hcol_v. apply dot_product_comm.
+      - apply nth_error_None in Hcol_v. rewrite Hcol_v. simpl. reflexivity.
+    }
+    (* Manipulate H_elem using H1, Hw, and properties of dot_product to show that it must be true *)
+    destruct (Nat.eqb u v) eqn:Heq_uv.
+    + apply Nat.eqb_eq in Heq_uv. subst. apply H_elem.
+    + apply Nat.eqb_neq in Heq_uv. rewrite H_elem.
+      destruct (dot_product (get_row m u) (get_column M' v)) eqn:Hdot.
+      * reflexivity.
+      * exfalso. apply Hw. exists w. assumption.
+Qed.
