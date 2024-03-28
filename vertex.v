@@ -64,4 +64,13 @@ Theorem adj_matrix_to_adj_isomorphic :
     let f := adj_matrix_to_adj m vs in
     let m' := adj_to_adj_matrix vs f in
     m = m'.
-Proof. Admitted.
+Proof.
+  intros m vs f m'.
+  unfold f, m'.
+  apply map_ext_in.
+  intros v H_in_vs.
+  unfold adj_to_adj_matrix, build_row.
+
+Qed.
+
+
