@@ -54,4 +54,9 @@ Fixpoint find_sccs (g : graph) : list (list vertex) :=
                       { st' with low := update_list (st'.low) idx_v (min (nth_bool (st'.low) idx_v) (nth_bool (st'.dfn) idx_w)) 
                       } 
                     else st') (find_neighbors g v) st in
+
+    (* Check if v is the root of an SCC *)
+    if (nth_bool new_dfn idx_v) = (nth_bool new_low idx_v) then 
+      let (scc, new_stack') := 
+        match new_stack with
 End tarjan.
